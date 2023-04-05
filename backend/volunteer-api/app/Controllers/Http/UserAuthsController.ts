@@ -27,7 +27,7 @@ export default class UserAuthsController {
     }
 
     public async logout({auth, response}: HttpContextContract) {
-        await auth.logout();
+        await auth.use('user').logout();
         return response.redirect('/');
     }
 }

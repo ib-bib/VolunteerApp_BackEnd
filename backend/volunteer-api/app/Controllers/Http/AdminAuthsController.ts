@@ -28,7 +28,7 @@ export default class AdminAuthsController {
     }
 
     public async logout({auth, response}: HttpContextContract) {
-        await auth.logout();
+        await auth.use('admin').logout();
         return response.redirect('/');
     }
 
