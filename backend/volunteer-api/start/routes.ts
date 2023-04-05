@@ -19,9 +19,16 @@
 */
 
 import Route from '@ioc:Adonis/Core/Route'
+import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
-Route.get('/', async () => {
-  return { hello: 'world' }
+Route.get('/', async (ctx: HttpContextContract) => {
+  if (ctx.auth.use('admin').isLoggedIn) {
+    return `Logged In as admin ${ctx.auth.use('admin').user?.name}`
+  }
+  if (ctx.auth.use('user').isLoggedIn) {
+    return `Logged In as user ${ctx.auth.use('user').user?.name}` 
+  }
+  return 'HOME : Not Logged in'
 })
 
 
