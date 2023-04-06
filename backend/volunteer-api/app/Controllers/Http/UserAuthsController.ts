@@ -12,7 +12,7 @@ export default class UserAuthsController {
         await user.save();
 
         return ctx.response.json({
-            msg: "Ok"
+            msg: "Sign up successful"
         })
     }
 
@@ -26,7 +26,7 @@ export default class UserAuthsController {
         return ctx.response.redirect('/');
     }
 
-    public async logout({auth, response}: HttpContextContract) {
+    public async logout({ auth, response }: HttpContextContract) {
         await auth.use('user').logout();
         return response.redirect('/');
     }

@@ -20,9 +20,11 @@ export default class Admin extends BaseModel {
 
   @column()
   public yellow_flags: number
+  // Delete
 
   @column()
   public red_flags: number
+  // Delete
 
   @column()
   public branch_join_date: string
@@ -35,28 +37,29 @@ export default class Admin extends BaseModel {
       return Boolean(value)
     },
   })
-	public is_leader: Boolean
+  public is_leader: Boolean
 
   @column({
     serialize(value: number) {
       return Boolean(value)
     },
   })
-	public is_deleted: Boolean
+  public is_deleted: Boolean
 
   @column({
     serialize(value: number) {
       return Boolean(value)
     },
   })
-	public is_suspended: Boolean
+  public is_suspended: Boolean
 
   @column({
     serialize(value: number) {
       return Boolean(value)
     },
   })
-	public is_verified: Boolean
+  public is_verified: Boolean
+  // Delete
 
   @column({ serializeAs: null })
   public password: string
@@ -71,7 +74,7 @@ export default class Admin extends BaseModel {
   public updatedAt: DateTime
 
   @beforeSave()
-  public static async hashPassword (admin: Admin) {
+  public static async hashPassword(admin: Admin) {
     if (admin.$dirty.password) {
       admin.password = await Hash.make(admin.password)
     }

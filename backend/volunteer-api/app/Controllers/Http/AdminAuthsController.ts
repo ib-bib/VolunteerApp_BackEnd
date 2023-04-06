@@ -13,7 +13,7 @@ export default class AdminAuthsController {
         await admin.save();
 
         return ctx.response.json({
-            msg: "Ok"
+            msg: "Sign up successful"
         })
     }
 
@@ -27,7 +27,7 @@ export default class AdminAuthsController {
         return ctx.response.redirect('/');
     }
 
-    public async logout({auth, response}: HttpContextContract) {
+    public async logout({ auth, response }: HttpContextContract) {
         await auth.use('admin').logout();
         return response.redirect('/');
     }

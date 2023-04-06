@@ -29,34 +29,35 @@ export default class User extends BaseModel {
 
   @column()
   public tasks_completed: number
+  // rename to conditions completed, criteria completed, or requirements completed
 
   @column({
     serialize(value: number) {
       return Boolean(value)
     },
   })
-	public is_leader: Boolean
+  public is_leader: Boolean
 
   @column({
     serialize(value: number) {
       return Boolean(value)
     },
   })
-	public is_deleted: Boolean
+  public is_deleted: Boolean
 
   @column({
     serialize(value: number) {
       return Boolean(value)
     },
   })
-	public is_suspended: Boolean
+  public is_suspended: Boolean
 
   @column({
     serialize(value: number) {
       return Boolean(value)
     },
   })
-	public is_verified: Boolean
+  public is_verified: Boolean
 
   @column({ serializeAs: null })
   public password: string
@@ -71,7 +72,7 @@ export default class User extends BaseModel {
   public updatedAt: DateTime
 
   @beforeSave()
-  public static async hashPassword (user: User) {
+  public static async hashPassword(user: User) {
     if (user.$dirty.password) {
       user.password = await Hash.make(user.password)
     }
