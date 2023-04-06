@@ -41,7 +41,7 @@ Route.get('/', async (ctx: HttpContextContract) => {
         team: ctx.auth.use('user').user?.team,
         yellow_flags: ctx.auth.use('user').user?.yellow_flags,
         red_flags: ctx.auth.use('user').user?.red_flags,
-        year_joined: ctx.auth.use('user').user?.branch_join_date.substring(0, 4),
+        year_joined: ctx.auth.use('user').user?.branch_join_date,
         major_tasks: ctx.auth.use('user').user?.tasks_completed,
         leadership_status: ctx.auth.use('user').user?.is_leader,
       },
@@ -62,6 +62,7 @@ Route.group(() => {
   Route.post('/admin_login', 'AdminAuthsController.login')
   Route.post('/user_logout', 'UserAuthsController.logout')
   Route.post('/admin_logout', 'AdminAuthsController.logout')
+  Route.post('/user_change_password', 'UserAuthsController.changePassword')
 
 }).prefix('auth');
 

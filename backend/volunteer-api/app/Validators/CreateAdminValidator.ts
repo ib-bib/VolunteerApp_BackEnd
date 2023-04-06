@@ -3,7 +3,7 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import EnumValues from 'App/Enums/EnumValues'
 
 export default class CreateAdminValidator {
-  constructor(protected ctx: HttpContextContract) {}
+  constructor(protected ctx: HttpContextContract) { }
 
   /*
    * Define schema to validate the "shape", "type", "formatting" and "integrity" of data.
@@ -31,6 +31,7 @@ export default class CreateAdminValidator {
     ]),
     password: schema.string([
       rules.minLength(8)
+      // We could add more requirements for the password
     ]),
     phone: schema.string([
       rules.unique({ table: 'admins', column: 'phone' })
