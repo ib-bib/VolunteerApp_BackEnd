@@ -23,18 +23,41 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 
 Route.get('/', async (ctx: HttpContextContract) => {
   if (ctx.auth.use('admin').isLoggedIn) {
-    return `Logged In as admin ${ctx.auth.use('admin').user?.name}`
+    return {
+      message: `Logged In as admin ${ctx.auth.use('admin').user?.name}`,
+      data: ctx.auth.use('admin').user,
+      team: {
+        // All team members data goes here
+      }
+    };
+    // return all the relevant data for all the members of the team that the HR member manages
+    // If the request is done by the leader of the HR, the data they see is every admin that is not a leader
   }
   if (ctx.auth.use('user').isLoggedIn) {
-    return `Logged In as user ${ctx.auth.use('user').user?.name}` 
+    return {
+      message: `Logged In as user ${ctx.auth.use('user').user?.name}`,
+      data: {
+        name: ctx.auth.use('user').user?.name,
+        team: ctx.auth.use('user').user?.team,
+        yellow_flags: ctx.auth.use('user').user?.yellow_flags,
+        red_flags: ctx.auth.use('user').user?.red_flags,
+        year_joined: ctx.auth.use('user').user?.branch_join_date.substring(0, 4),
+        major_tasks: ctx.auth.use('user').user?.tasks_completed,
+        leadership_status: ctx.auth.use('user').user?.is_leader,
+      },
+    }
+    // return the specific user's data: their name, their team, their flags count, their major task count, their leadership status
+    // also return their ratings, and the relevant notifications (branch-wide and team-specific events/meetings)
+    // BONUSES: computing an average of their rating and returning the latest rating
   }
   return 'HOME : Not Logged in'
 })
 
 
 Route.group(() => {
-  Route.post('/register_user', 'UserAuthsController.register')
-  Route.post('/register_admin', 'AdminAuthsController.register')
+  Route.post('/user_register', 'UserAuthsController.register')
+  Route.post('/admin_register', 'AdminAuthsController.register')
+  // Minor alteration for consistency
   Route.post('/user_login', 'UserAuthsController.login')
   Route.post('/admin_login', 'AdminAuthsController.login')
   Route.post('/user_logout', 'UserAuthsController.logout')
